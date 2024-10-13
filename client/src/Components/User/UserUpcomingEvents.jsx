@@ -43,7 +43,7 @@ const UserUpcomingEvents = () => {
     return (
       <div>
         {heading}
-        <div className='text-2xl font-semibold p-2 my-10'>No upcoming events !</div>
+        <div className='text-2xl font-semibold p-2 my-10 px-3 lg:ml-4'>No upcoming events !</div>
       </div>
     )
   }

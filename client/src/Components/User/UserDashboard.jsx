@@ -68,7 +68,7 @@ const UserDashboard = () => {
         {error && <p className='text-md text-center text-red-500 p-3'>Error while logging u out</p>}
         <div className='flex space-x-8 my-8 justify-center'>
         <button className='bg-blue-500 p-4 text-white' onClick={()=>handleLogout()}>Logout </button>
-        <button className='bg-red-500 p-4 text-white' onClick={()=>handleDelete()}>Delete acc </button>
+        <button className='bg-red-500 p-4 text-white' onClick={()=>handleDelete()}>Delete account  </button>
         </div>
     </div>
   )

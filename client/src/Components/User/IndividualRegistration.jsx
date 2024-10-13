@@ -49,7 +49,7 @@ const IndividualRegistration = () => {
     formData.append('country', country);
     formData.append('city', city);
     if (profilePicture) {
-        formData.append('profilePicture', profilePicture); // Ensure the profile picture is appended
+        formData.append('profilePicture', profilePicture); 
     }
     await  axios.post(`${backendURL}auth/register/user`,formData,
    //    {
@@ -64,7 +64,7 @@ const IndividualRegistration = () => {
          setIsSubmit(true)
          setIsUser(true)
          setUser(response.data.createdUser)
-         navigate('/user/dashboard')
+         navigate(`/user/view-profile/${response.data.createdUser._id}`)
      }).catch(err => {
          setIsError(true)   
       if(err.code === 11000){

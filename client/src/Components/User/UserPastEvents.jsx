@@ -33,7 +33,7 @@ const UserPastEvents = () => {
     return (
       <div>
         {heading}
-        <div className='text-2xl font-semibold p-2 my-10'>No past events !</div>
+        <div className='text-2xl font-semibold p-2 my-10 px-3 lg:ml-4'>No past events !</div>
       </div>
     )
   }

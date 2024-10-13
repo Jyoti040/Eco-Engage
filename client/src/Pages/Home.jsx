@@ -85,7 +85,7 @@ const Home = () => {
         <AllUpcomingEvents homePage={true}/>
        </div>
 
-       <div>
+       <div className='mt-16'>
         <AllPastEvents homePage={true}/>
        </div>
     </div>

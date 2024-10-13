@@ -37,7 +37,7 @@ const AllPastEvents = ({ homePage = false }) => {
   }, []);
 
   if (loading) {
-    return <h2 className="pl-4 lg:text-lg font-md my-10">Loading...</h2>;
+    return <h2 className="pl-4 lg:text-lg font-md my-10 text-xl">Loading...</h2>;
   }
 
   const handleFilteredEvents = (e) => {
@@ -58,8 +58,8 @@ const AllPastEvents = ({ homePage = false }) => {
 
   return (
     <div className="bg-white my-10 mx-8">
-      <div className="flex flex-col lg:flex-row lg:justify-between">
-        <h1 className="lg:text-left lg:ml-4 font-bold text-4xl mb-8 text-secondaryDarkGreen animate-slideIn">
+      {/* <div className="flex">
+        <h1 className={`lg:text-center lg:ml-4 font-bold text-4xl mb-8 text-secondaryDarkGreen animate-slideIn `}>
           {!homePage && 'All'} Past events
         </h1>
         {homePage && (
@@ -72,14 +72,9 @@ const AllPastEvents = ({ homePage = false }) => {
         )}
 
         {!homePage && (
-         <div>
-           <div className="flex flex-row border rounded-lg mb-4  space-x-2 p-3">         
+         <div className='flex justify-center items-center'>
+           <div className="flex flex-row border rounded-lg mb-4  space-x-2 p-3 w-96 border border-black">         
             <div><SearchIcon className="" /></div>
-            {/* <select className='focus:outline-none'>
-            <option >Title</option>
-            <option>City</option>
-            <option>Country</option>
-           </select> */}
             <input
               className="focus:outline-none text-lg text-black"
               type="text"
@@ -91,7 +86,41 @@ const AllPastEvents = ({ homePage = false }) => {
           </div>
          </div>
         )}
+      </div> */}
+      <div className="">
+  <div className={`flex ${homePage ? 'justify-between' : 'justify-center'} items-center mb-8`}>
+    <h1 className="font-bold text-4xl text-secondaryDarkGreen animate-slideIn">
+      {!homePage && 'All'} Past events
+    </h1>
+    {homePage && (
+      <Link to="/all-Past-events">
+        <div className="flex space-x-2 items-center">
+          <p className="text-lg">View All</p>
+          <ArrowUpRightFromSquareIcon />
+        </div>
+      </Link>
+    )}
+  </div>
+
+  {!homePage && (
+    <div className="flex justify-center items-center">
+      <div className="flex flex-row border rounded-lg mb-4 space-x-2 p-3 w-96 border border-black">
+        <div>
+          <SearchIcon className="" />
+        </div>
+        <input
+          className="focus:outline-none text-lg text-black"
+          type="text"
+          name="search-event"
+          value={title}
+          onChange={handleFilteredEvents}
+          placeholder="Enter event title"
+        />
       </div>
+    </div>
+  )}
+</div>
+
 
       {events.length === 0 && (
         <h2 className="pl-4 lg:text-lg font-md">No events to display!</h2>

@@ -52,7 +52,7 @@ const OrganisationRegistration = () => {
     formData.append('instagram', instagram);
     formData.append('twitter', twitter);
     if (logo) {
-        formData.append('logo', logo); // Ensure the profile picture is appended
+        formData.append('logo', logo); 
     }
     await  axios.post(`${backendURL}auth/register/organisation`,
       formData , 
@@ -65,7 +65,7 @@ const OrganisationRegistration = () => {
          setOrganisation(response.data.createdOrganisation)
          setIsSubmit(true)
          setTimeout(()=>{
-            navigate('/organisation/dashboard')
+            navigate(`/organisation/update-profile/${response.data.createdOrganisation._id}`)
          },3000)
      }).catch(err => {
        setIsSubmit(false)
