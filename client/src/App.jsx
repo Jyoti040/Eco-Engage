@@ -25,6 +25,8 @@ import OrganisationUpcomingEvents from './Components/Organisation/OrganisationUp
 import OrganisationPastEvents from './Components/Organisation/OrganisationPastEvents';
 import AboutOrganisation from './Components/Organisation/AboutOrganisation';
 import UpdateUserProfile from './Components/User/UpdateUserProfile';
+import ForgetPassword from './Pages/ForgetPassword';
+import ResetPassword from './Pages/ResetPassword';
 
 const App = () => {
   return (
@@ -35,6 +37,8 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/forget-password' element={<ForgetPassword/>}/>
+        <Route path='/reset-password/:id/:token' element={<ResetPassword/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/profile-event-card' element={<ProfileEventCard/>}/>
         <Route path='/home-event-card' element={<HomeEventCard/>}/>

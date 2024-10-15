@@ -22,6 +22,8 @@ app.use(cors({
 app.use(cookieParser())
 app.use(express.json())
 
+// app.set("view engine","ejs") //have to verify this
+
 app.use('/auth',authRoutes)
 app.use('/api/v1/events',eventRoutes)
 app.use('/api/v1/organisation',organisationRoutes)

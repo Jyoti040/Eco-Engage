@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const upload = require('../utils/multer')
-const {registerOrganisation , registerUser , login , logout , getCurrentUser} = require('../controllers/auth')
+const {registerOrganisation , registerUser , login , logout , getCurrentUser , forgetPassword, resetPassword} = require('../controllers/auth')
 const {verifyJWT} = require('../middleware/Auth')
 const imageUplaod = require('../middleware/imageUpload')
 
@@ -17,6 +17,7 @@ router.post('/register/user' , upload.single('profilePicture'),async (req,res,ne
         next(error)
     }
 } , registerUser)
+
 router.post('/register/organisation' , upload.single('logo'),async (req,res,next)=>{
     try {
         console.log('in image upload ',req.file.path)
@@ -30,10 +31,10 @@ router.post('/register/organisation' , upload.single('logo'),async (req,res,next
 } , registerOrganisation)
 // router.route('/register/organisation').post(registerOrganisation)
 router.route('/login').post(login)
-
 router.route('/current-user').get(verifyJWT,getCurrentUser)
 router.route('/logout').get(verifyJWT,logout)
-
+router.route('/forget-password').post(forgetPassword)
+router.route('/reset-password/:id/:token').post(resetPassword)
 
 module.exports = router
 

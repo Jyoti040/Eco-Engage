@@ -2,6 +2,9 @@ const User = require('../models/UserSchema')
 const Organisation = require('../models/OrganisationSchema')
 const CustomAPIError = require('../errors/CustomError')
 const asyncHandler = require('../utils/asyncHandler')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const sendEmail = require('../utils/sendEmail')
 
 const generateUserToken = async(Id,next) => {
     try {
@@ -399,13 +402,13 @@ const getCurrentUser =  async(req,res,next)=> {
    }
 }
 
-const updateUserDetails = async(req,res,next)=>{
-    try {
+// const updateUserDetails = async(req,res,next)=>{
+//     try {
         
-    } catch (error) {
-        next(error)
-    }
-}
+//     } catch (error) {
+//         next(error)
+//     }
+// }
 
 // const isUserLoggedIn = async(req,res,next)=> {
 //     try {
@@ -414,6 +417,97 @@ const updateUserDetails = async(req,res,next)=>{
 //         next(error)
 //     }
 // }
+const forgetPassword = async(req,res,next)=>{
+    try {
+        const {email}= req.body;
 
+        if(!email ) {
+            throw new CustomAPIError('Please provide an email ',400) // bad req status code
+        }
 
-module.exports = {registerOrganisation , registerUser , login , logout , getCurrentUser}
+        const user = await User.findOne({userEmail : email})
+        const organisation = await Organisation.findOne({organisationEmail : email})
+    
+        
+       if( !user && !organisation){
+           throw new CustomAPIError('No such email is registered , please create an account first',404) // unauth errorr
+       } 
+
+       if(user){
+         const secret = process.env.JWT_SECRET + user.password;
+         const token = jwt.sign({email : user.userEmail , id: user._id},secret,{expiresIn : process.env.FORGET_PASSWORD_JWT_LIFETIME})
+         const link = `${process.env.CORS_ORIGIN}/reset-password/${user._id}/${token}`
+         console.log('in forget password',link)
+
+         // send mail
+        await sendEmail(user.userEmail , 'Password reset',link);
+
+        return res.status(201)
+        .json({
+              success : true,
+              message : 'Password reset mail sent . Kindly check your mail'
+        })
+
+        }
+
+       
+    } catch (error) {
+     next(error)   
+    }
+}
+
+const resetPassword = async(req,res,next)=>{
+ try {
+    const { id , token } = req.params
+    console.log('in reset password',req.params)
+    const {password} = req.body;
+
+    if(!id || !token ) {
+        throw new CustomAPIError('Please provide id and token  ',400) // bad req status code
+    }
+
+    const user = await User.findOne({_id : id})
+    const organisation = await Organisation.findOne({_id : id})
+
+    
+   if( !user && !organisation){
+       throw new CustomAPIError('No such user',404) // unauth errorr
+   } 
+
+   if(user){
+    const secret = process.env.JWT_SECRET + user.password;
+    const decodedToken = jwt.verify(token,secret)
+
+       if(!decodedToken){
+        throw new CustomAPIError('Invalid token',401)
+       }
+
+       console.log('in reset token',decodedToken)
+
+       const salt = await bcrypt.genSalt(10);
+       const  newPassword = await bcrypt.hash(password , salt)
+
+       await User.updateOne(
+        {
+            _id  : id,
+        },{
+            $set : {
+                password : newPassword
+            }
+        }
+       )
+
+       return res.status(201)
+        .json({
+              success : true,
+              message : 'Password reset done . Kindly login with updated password.'
+        })
+
+   }
+
+ } catch (error) {
+    next(error)
+ }
+}
+
+module.exports = {registerOrganisation , registerUser , login , logout , getCurrentUser , forgetPassword , resetPassword}
