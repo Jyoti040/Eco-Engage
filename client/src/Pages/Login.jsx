@@ -33,11 +33,11 @@ const Login = () => {
               if(res.data?.isUser){
                 setIsUser(true)
                 setUser(res.data.user)
-                naviagte('/user/view-profile')
+                naviagte(`/user/view-profile/${res.data.user._id}`)
               }else{
                 setIsOrganisation(true)
                 setOrganisation(res.data.organisation)
-                naviagte('/organisation/view-profile')
+                naviagte(`/organisation/view-profile/${res.data.organisation._id}`)
               }
             },3000)
         }).catch((err)=>{
@@ -65,7 +65,7 @@ const Login = () => {
         <h1 className='lg:text-4xl font-bold mt-10 mb-2 text-3xl text-center'>Welcome Back</h1>
         <h3 className='lg:text-2xl font-semibold mb-4 text-xl text-center'>Log in to your account</h3>
 
-     {isSubmit && <p className='text-green-500 font-medium text-md text-center p-4'>Logged in successfully</p>}
+     {isSubmit && <p className='text-green-500 font-medium text-md text-center p-4 pb-0'>Logged in successfully</p>}
        <form onSubmit={handleSubmit} className='mt-16 mx-6 lg:mx-0'>
          <div className='flex flex-row space-x-2 border-b mb-6'>
             <MailIcon/>

@@ -19,7 +19,7 @@ const Register = () => {
        src={register} alt='login-img' className='h-72 rounded '
       />
       <div className='text-center mt-4'>
-        <Link to='/register' className='text-lg text-center'>Already have an account ? Login</Link >
+        <Link to='/login' className='text-lg text-center'>Already have an account ? Login</Link >
       </div>
     </div>
 
