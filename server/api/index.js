@@ -47,3 +47,7 @@ const start = async () => {
 }
 
 start()
+
+app.get('/',(req,res)=>{
+    res.send("Welcome to EcoEngage backend")
+})
