@@ -5,15 +5,15 @@ const cookieParser = require("cookie-parser")
 const express = require('express')
 const app = express()
 
-const connectDB = require('./db/connect')
-const CustomError = require('./errors/CustomError')
-const NotFoundMiddleware = require('./middleware/NotFound')
-const ErrorHandlerMiddleware = require('./middleware/ErrorHandler')
+const connectDB = require('../db/connect')
+const CustomError = require('../errors/CustomError')
+const NotFoundMiddleware = require('../middleware/NotFound')
+const ErrorHandlerMiddleware = require('../middleware/ErrorHandler')
 
-const authRoutes = require('./routes/authorise')
-const eventRoutes = require('./routes/events')
-const organisationRoutes = require('./routes/organisation')
-const userRoutes = require('./routes/user')
+const authRoutes = require('../routes/authorise')
+const eventRoutes = require('../routes/events')
+const organisationRoutes = require('../routes/organisation')
+const userRoutes = require('../routes/user')
 
 app.use(cors({
     origin : process.env.CORS_ORIGIN,
