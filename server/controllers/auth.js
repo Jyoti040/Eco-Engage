@@ -12,7 +12,7 @@ const generateUserToken = async(Id,next) => {
         console.log(user)
 
         if(!user){
-              throw new CustomAPIError('No user exists with the iven id',401);
+              throw new CustomAPIError('No user exists with the given id',401);
         }
         const token = user.generateJWTToken()
         if(!token){
